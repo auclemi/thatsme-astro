@@ -1,0 +1,22 @@
+{
+  "files.associations": {
+    "*.astro": "astro"
+  },
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode",
+    "editor.formatOnSave": true
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "prettier.documentSelectors": ["**/*.astro", "**/*.vue"],
+  "workbench.editor.limit.enabled": true,
+	"workbench.editor.limit.value": 50,
+	"workbench.editor.limit.perEditorGroup": true,
+	"workbench.editor.limit.excludeDirty": true,
+	"explorer.sortOrder": "default",
+   "workbench.editor.wrapTabs": true,
+  "workbench.editor.tabSizing": "shrink"
+}
+

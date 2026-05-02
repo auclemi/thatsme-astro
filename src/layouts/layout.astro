@@ -1,0 +1,49 @@
+---
+import "../styles/styles.scss";
+import "./layouts.scss";
+import Header from "./header.astro";
+import Footer from "./footer.astro";
+
+export interface Props {
+    title?: string;
+    /** Suffix appended to the document <title> (SEO/browser tab). */
+    titleSuffix?: string;
+}
+
+const { title = "", titleSuffix = " - That's Me !" } = Astro.props;
+const documentTitle =
+    titleSuffix && !title.endsWith(titleSuffix)
+        ? `${title}${titleSuffix}`
+        : title;
+---
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{documentTitle}</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <div class="d-flex flex-column min-vh-100">
+            <Header title={title} />
+            <div
+                id="main-content"
+                tabindex="-1"
+                class="container mt-3 flex-grow-1"
+            >
+                <slot />
+            </div>
+
+            <Footer />
+        </div>
+    </body>
+</html>
