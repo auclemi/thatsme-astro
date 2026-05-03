@@ -1,3 +1,7 @@
+---
+const pathname = Astro.url.pathname;
+---
+
 <div class="row g-0 mt-5" id="footer">
   <div
     class="col-12 col-md-6 d-flex flex-wrap justify-content-md-end text-break gx-3"
@@ -12,8 +16,8 @@
   >
     <nav>
       <a
-        routerLink="/accessibilite"
-        [attr.aria-current]="utilityService.curPage() === '/accessibilite'  ? 'page' : null"
+        href="/accessibility"
+        aria-current={pathname === "/accessibility" ? "page" : undefined}
       >
         Déclaration d'accessibilité
       </a>
