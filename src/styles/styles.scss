@@ -3,7 +3,7 @@
 
 
 /* You can add global styles to this file, and also import other style files */
-@import "styles-colors.scss";
+@use "styles-colors" as colors;
 
 body {
   // fixes header sticky not working after several scrolls
@@ -37,22 +37,6 @@ a[aria-current="page"]:hover {
   margin-left: 1.1rem;
 }
 
-//Remove fancy list for now, as it causes issues with screen readers who says text, checked
-// .list-ok li {
-// display: flex;
-// align-items: flex-start;
-// gap: 0.1em;
-
-// }
-// Unicode character for checkmark (✓) with green color
-// .list-ok li::before {
-// content: "\2714";
-// color: #198754;
-// margin-right: 0.3rem;
-// flex-shrink: 0;
-// font-weight: bold;
-// font-size: 1.2em;
-// }
 
 .custom-shadow {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.50);
@@ -61,7 +45,7 @@ a[aria-current="page"]:hover {
 
 
  a {
-  color: $link-color;
+  color: colors.$link-color;
 }  
 
 a:hover {
@@ -88,20 +72,21 @@ h3 {
   font-weight: bold;
 }
 
-/* Supprime l'outline par défaut */
-// :focus {
-//   outline: none;
-// }
+// section cards
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
 
-// /* Focus visible uniquement pour clavier (pas pour clic souris) */
-// [name="main-content"]:focus-visible {
-//   // outline: 3px solid #ffcc00; /* jaune Datsmi */
-//   outline: 3px solid #198754; /* jaune Datsmi */
+section {
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: .375rem;
+  flex: 0 0 500px;
+}
 
-//   outline-offset: 4px;
-//   border-radius: 4px;
-//   transition: outline-offset 0.1s ease;
-// }
 
 
 /* Page Transition Animations */
@@ -132,5 +117,11 @@ h3 {
 
   to {
     opacity: 1;
+  }
+}
+
+@media (max-width: 1200px) {
+  section {
+      flex: 0 0 100%;
   }
 }

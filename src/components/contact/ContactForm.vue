@@ -1,4 +1,5 @@
 <script setup>
+import ErrorComponent from "../error/error.component.vue";
 import { ref, computed } from "vue";
 
 const name = ref("");
@@ -23,10 +24,11 @@ const submitted = ref(false);
 const errors = computed(() => {
   const e = {};
 
-  if (!name.value.trim()) e.name = "Veuillez entrer votre nom.";
+  if (name.value.trim().length < 5) e.name = "Veuillez entrer votre nom.";
   if (!email.value.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/))
     e.email = "Veuillez entrer un email valide.";
-  if (!message.value.trim()) e.message = "Veuillez écrire un message.";
+  if (message.value.trim().length < 5)
+    e.message = "Veuillez écrire un message.";
 
   return e;
 });
@@ -44,9 +46,15 @@ async function submitForm(e) {
   loading.value = true;
   success.value = false;
   serverError.value = null;
-
+  const contactEndPoint = import.meta.env.PUBLIC_CONTACT_API_URL;
+  if (!contactEndPoint) {
+    serverError.value =
+      "Configuration manquante : définir PUBLIC_CONTACT_API_URL dans .env";
+    loading.value = false;
+    return;
+  }
   try {
-    const res = await fetch("https://thatsme.freeboxos.fr/api/contact", {
+    const res = await fetch(contactEndPoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -77,7 +85,20 @@ async function submitForm(e) {
 </script>
 
 <template>
-  <div class="row g-5 justify-content-md-between">
+  <ErrorComponent
+    v-if="serverError"
+    errorMessage="Une erreur est survenue."
+    instruction="Veuillez réessayer dans quelques minutes."
+  />
+  <div class="alert alert-success" v-if="success">
+    <div>Votre message a bien été envoyé.</div>
+    <div>Je vous réponds généralement sous 24 à 48h en semaine.</div>
+    <div><a href="/home">Retour à l'accueil.</a></div>
+  </div>
+  <div
+    class="row g-5 justify-content-md-between"
+    v-if="!serverError && !success"
+  >
     <div class="col-12 col-md-5">
       <form @submit="submitForm">
         <!-- Nom -->
@@ -119,6 +140,7 @@ async function submitForm(e) {
             id="message"
             v-model="message"
             class="form-control"
+            minlength="5"
             rows="5"
             @blur="touched.message = true"
             :class="{

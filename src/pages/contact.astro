@@ -1,0 +1,13 @@
+---
+import Layout from "../layouts/layout.astro";
+import "../components/contact/contact.scss";
+import ContactForm from "../components/contact/ContactForm.vue";
+---
+
+<Layout title="Contact">
+  <h1>
+    <span aria-hidden="true">🎯</span>
+    Contact
+  </h1>
+  <ContactForm client:load />
+</Layout>

@@ -1,6 +1,0 @@
----
-import Layout from "../../layouts/layout.astro";
-import "./prestations-web.scss";
----
-
-<Layout title="Prestations Web">
